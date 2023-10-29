@@ -3,8 +3,10 @@
 namespace PHPRouter\Attributes;
 use AbstractResponse;
 use Attribute;
+use Exception;
 use PHPRouter\Response\JsonResponse;
 use PHPRouter\Response\Response;
+use TypeError;
 
 
 #[Attribute(Attribute::TARGET_METHOD)]
@@ -46,7 +48,13 @@ class Route {
     }
 
     public function call() {
-        $response = call_user_func_array($this->callable, $this->params);
+
+        try {
+            $response = call_user_func_array($this->callable, $this->params);
+        } catch (TypeError $error) {
+            throw new Exception($error->getMessage());
+        }
+         
         if($response instanceof Response) {
             $response->send();
         } else {

@@ -6,3 +6,4 @@ define('DB_PASSWORD', '');
 define('DB_HOST', 'localhost');
 
 define('AUTOWIRING', true);
+define('AUTOLOAD_CONTROLLER', true);
